@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <!-- Marco de escaneo óptico -->
+  <path d="M4 11V7C4 5.34315 5.34315 4 7 4H11" stroke="#059669" stroke-width="2.6" stroke-linecap="round" />
+  <path d="M25 4H29C30.6569 4 32 5.34315 32 7V11" stroke="#059669" stroke-width="2.6" stroke-linecap="round" />
+  <path d="M32 25V29C32 30.6569 30.6569 32 29 32H25" stroke="#059669" stroke-width="2.6" stroke-linecap="round" />
+  <path d="M11 32H7C5.34315 32 4 30.6569 4 29V25" stroke="#059669" stroke-width="2.6" stroke-linecap="round" />
+  <!-- Hoja estilizada central -->
+  <path d="M24.5 11.5C17.5 11.5 12 15.8 12 22.5C12 23.4 12.1 24.2 12.3 25C13.1 25.2 13.9 25.3 14.8 25.3C21.5 25.3 25.8 19.8 25.8 12.8C25.8 12 25.3 11.5 24.5 11.5Z" fill="#10B981" fill-opacity="0.2" stroke="#059669" stroke-width="2.2" stroke-linejoin="round" />
+  <path d="M12.5 24.8L21.5 15.8" stroke="#059669" stroke-width="2.2" stroke-linecap="round" />
+</svg>

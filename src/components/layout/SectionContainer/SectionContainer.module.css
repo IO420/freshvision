@@ -1,0 +1,16 @@
+.section {
+  width: 100%;
+  padding: 56px 24px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 40px 16px;
+  }
+}

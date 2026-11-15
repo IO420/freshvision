@@ -50,7 +50,7 @@ export const QUICK_SAMPLES: FruitAnalysisData[] = [
   {
     id: 'orange',
     name: 'Naranja con Merma',
-    image: '/images/fruits/orange-spoiled.webp',
+    image: '/images/fruits/orange-spoiled.jpg',
     fruitType: 'Naranja Valencia',
     status: 'spoiled',
     confidence: 0.963,
