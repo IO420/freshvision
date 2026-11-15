@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import { Terminal, Cpu, Atom, Zap, Leaf } from "lucide-react";
 import styles from "./Footer.module.css";
@@ -15,9 +14,11 @@ const TECH_STACK = [
 ];
 
 const TEAM_MEMBERS = [
+  { name: "Axel Espinosa Paz", isLead: false },
   { name: "Lino Eduardo Avilés Hernández", isLead: false },
-  { name: "Ramon Medina Hernandez", isLead: false },
-  { name: "Luis Angel Cipres Flores", isLead: false },
+  { name: "Eduardo Yael Gonzalez Lopez", isLead: false },
+  { name: "Ramona Mediana Hernandez", isLead: false },
+  { name: "Lois Angel Cipres Flores", isLead: false },
 ];
 
 function GithubMark({ size = 19 }: { size?: number }) {
@@ -74,6 +75,7 @@ export function Footer({ githubRepoUrl = "#arquitectura-ia" }: FooterProps) {
             <h3 className={styles.colTitle}>Código Fuente:</h3>
             <a
               href={githubRepoUrl}
+              target="_blank"
               className={styles.repoCard}
               aria-label="Repositorio público del proyecto en GitHub"
             >
