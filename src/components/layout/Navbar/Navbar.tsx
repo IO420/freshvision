@@ -6,12 +6,15 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button/Button';
 import styles from './Navbar.module.css';
 
+
 const NAV_ITEMS = [
   { label: 'El Problema', href: '#el-problema' },
   { label: 'Demo en Vivo', href: '#demo-en-vivo' },
   { label: 'Modelo de Negocio', href: '#modelo-de-negocio' },
   { label: 'Arquitectura IA', href: '#arquitectura-ia' },
+  { label: 'About Us', href: '#about-us' },
 ];
+
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
