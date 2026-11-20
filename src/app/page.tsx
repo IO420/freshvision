@@ -19,6 +19,7 @@ export default function HomePage() {
       </main>
 
       <Footer githubRepoUrl="https://github.com/IO420/freshvision" />
+      <Footer githubRepoUrl="https://github.com/IO420/fruit-quality" />
     </>
   );
 }

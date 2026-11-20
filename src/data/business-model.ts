@@ -1,26 +1,27 @@
 import { BusinessPlan } from '@/types/business';
 
 export const BUSINESS_PLANS: BusinessPlan[] = [
+  
   {
-    id: 'b2c',
-    title: 'Plan B2C',
+    id: 'Gratuito',
+    title: 'Plan Gratuito',
     subtitle: '(Freemium)',
     description:
-      'Escaneo individual gratuito para consumidores en el súper mediante cámara móvil instantánea.',
+      'Escanear un máximo de 20 fotos al día',
     highlightTag: 'Consumo Inteligente',
     iconName: 'smartphone',
   },
   {
-    id: 'b2b',
-    title: 'Plan B2B',
-    subtitle: '(SaaS Supermercados)',
+    id: 'Suscripción',
+    title: 'Plan Premium',
+    subtitle: '(Freemium)',
     description:
-      'Suscripción mensual por sucursal para auditoría automatizada de mermas y rotación de anaquel.',
-    highlightTag: 'Optimización Retail',
+      'Escanear un hasta  100 fotos al día',
+    highlightTag: 'Consumo Inteligente',
     iconName: 'store',
   },
   {
-    id: 'roadmap',
+    id: 'Roadmap',
     title: 'Roadmap Fase 2',
     subtitle: '(Multi-detección de Anaquel)',
     description:
