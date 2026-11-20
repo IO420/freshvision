@@ -1,15 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { Sparkles } from 'lucide-react';
-import {
-  QUICK_SAMPLES,
-  CUSTOM_UPLOAD_FALLBACK,
-} from '@/data/samples';
+import { Sparkles, AlertCircle } from 'lucide-react';
+import { QUICK_SAMPLES } from '@/data/samples';
 import { FruitAnalysisData } from '@/types/scanner';
 import { useImagePreview } from '@/hooks/useImagePreview';
 import { useRevealAnimation } from '@/hooks/useRevealAnimation';
+import { predictFruitImage } from '@/lib/api';
 import { Button } from '@/components/ui/Button/Button';
 import { ImageUploader } from '../ImageUploader/ImageUploader';
 import { QuickSamples } from '../QuickSamples/QuickSamples';
@@ -28,71 +26,70 @@ export function InferenceStudio() {
   } = useImagePreview();
 
   const [selectedSampleId, setSelectedSampleId] = useState<string | null>(null);
+  const [currentFile, setCurrentFile] = useState<File | string | null>(null);
   const [activeResult, setActiveResult] = useState<FruitAnalysisData | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
 
-  const runSimulatedInference = (targetData: FruitAnalysisData) => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
+  const executePrediction = async (
+    source: File | string,
+    name: string,
+    fallbackSample?: FruitAnalysisData
+  ) => {
     setIsAnalyzing(true);
-    timerRef.current = setTimeout(() => {
-      setActiveResult(targetData);
-      setIsAnalyzing(false);
-    }, 950);
-  };
+    setApiError(null);
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
+    try {
+      const prediction = await predictFruitImage(source, name);
+      setActiveResult(prediction);
+    } catch (err) {
+      console.error('Error al conectar con la API de freshVision:', err);
+      if (fallbackSample) {
+        // Si el backend no está encendido aún, muestra el respaldo de la muestra rápida
+        setActiveResult(fallbackSample);
+        setApiError('API sin conexión: mostrando datos de demostración.');
+      } else {
+        setApiError(
+          'No se pudo conectar con el servidor de inferencia. Verifica que la API esté activa.'
+        );
       }
-    };
-  }, []);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const handleSampleClick = (sample: FruitAnalysisData) => {
     setSelectedSampleId(sample.id);
+    setCurrentFile(sample.image);
     setStaticPreview(sample.image, sample.name);
-    runSimulatedInference(sample);
+    executePrediction(sample.image, `${sample.id}.webp`, sample);
   };
 
   const handleCustomFile = (file: File | null) => {
     const isValid = handleFileSelect(file);
     if (isValid && file) {
       setSelectedSampleId(null);
-      const customResult: FruitAnalysisData = {
-        ...CUSTOM_UPLOAD_FALLBACK,
-        name: file.name,
-      };
-      runSimulatedInference(customResult);
+      setCurrentFile(file);
+      executePrediction(file, file.name);
     }
   };
 
   const handleClear = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
     clearPreview();
     setSelectedSampleId(null);
+    setCurrentFile(null);
     setActiveResult(null);
+    setApiError(null);
     setIsAnalyzing(false);
   };
 
   const handleManualReanalyze = () => {
-    if (!previewUrl) return;
-    if (selectedSampleId) {
-      const found = QUICK_SAMPLES.find((s) => s.id === selectedSampleId);
-      if (found) {
-        runSimulatedInference(found);
-        return;
-      }
-    }
-    runSimulatedInference({
-      ...CUSTOM_UPLOAD_FALLBACK,
-      name: fileName || 'Imagen analizada',
-    });
+    if (!currentFile) return;
+    const fallback = selectedSampleId
+      ? QUICK_SAMPLES.find((s) => s.id === selectedSampleId)
+      : undefined;
+
+    executePrediction(currentFile, fileName || 'image.webp', fallback);
   };
 
   const displayedLatency = activeResult ? activeResult.inferenceTime : 142;
@@ -124,7 +121,7 @@ export function InferenceStudio() {
             </div>
           </div>
 
-          <div className={styles.latencyBadge} title="Tiempo de inferencia simulado">
+          <div className={styles.latencyBadge} title="Tiempo de inferencia">
             <span className={styles.latencyDot} aria-hidden="true" />
             <span>{displayedLatency} ms</span>
           </div>
@@ -153,7 +150,7 @@ export function InferenceStudio() {
                 >
                   <Sparkles size={16} />
                   <span>
-                    {isAnalyzing ? 'Analizando muestra...' : 'Ejecutar Inferencia IA'}
+                    {isAnalyzing ? 'Analizando imagen...' : 'Volver a Analizar'}
                   </span>
                 </Button>
               </div>
@@ -168,6 +165,27 @@ export function InferenceStudio() {
 
           {/* Panel Derecho */}
           <div className={styles.rightColumn}>
+            {apiError && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '12.5px',
+                  color: '#92400E',
+                  backgroundColor: '#FFFBEB',
+                  border: '1px solid rgba(245, 158, 11, 0.35)',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  marginBottom: '12px',
+                }}
+                role="alert"
+              >
+                <AlertCircle size={15} />
+                <span>{apiError}</span>
+              </div>
+            )}
+
             <AnalysisResult result={activeResult} isAnalyzing={isAnalyzing} />
           </div>
         </div>
