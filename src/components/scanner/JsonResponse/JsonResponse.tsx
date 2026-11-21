@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Code2, ChevronDown, ChevronUp } from 'lucide-react';
-import { ApiJsonPayload } from '@/types/scanner';
-import styles from './JsonResponse.module.css';
+import React, { useState } from "react";
+import { Code2, ChevronDown, ChevronUp } from "lucide-react";
+import { ApiJsonPayload } from "@/types/scanner";
+import styles from "./JsonResponse.module.css";
 
 interface JsonResponseProps {
   payload: ApiJsonPayload;
@@ -12,68 +12,57 @@ interface JsonResponseProps {
 export function JsonResponse({ payload }: JsonResponseProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const lines = [
-    { num: 1, content: <span className={styles.punctuation}>{'{'}</span> },
-    {
-      num: 2,
-      content: (
-        <>
-          {'  '}
-          <span className={styles.key}>&quot;status&quot;</span>
+  const probEntries = Object.entries(payload.probabilidades || {});
+
+  const lines: React.ReactNode[] = [
+    <span key="open" className={styles.punctuation}>
+      {"{"}
+    </span>,
+    <React.Fragment key="filename">
+      {"  "}
+      <span className={styles.key}>&quot;filename&quot;</span>
+      <span className={styles.punctuation}>: </span>
+      <span className={styles.string}>&quot;{payload.filename}&quot;</span>
+      <span className={styles.punctuation}>,</span>
+    </React.Fragment>,
+    <React.Fragment key="clase">
+      {"  "}
+      <span className={styles.key}>&quot;clase&quot;</span>
+      <span className={styles.punctuation}>: </span>
+      <span className={styles.string}>&quot;{payload.clase}&quot;</span>
+      <span className={styles.punctuation}>,</span>
+    </React.Fragment>,
+    <React.Fragment key="confianza">
+      {"  "}
+      <span className={styles.key}>&quot;confianza&quot;</span>
+      <span className={styles.punctuation}>: </span>
+      <span className={styles.number}>{payload.confianza}</span>
+      <span className={styles.punctuation}>,</span>
+    </React.Fragment>,
+    <React.Fragment key="prob-open">
+      {"  "}
+      <span className={styles.key}>&quot;probabilidades&quot;</span>
+      <span className={styles.punctuation}>: {"{"}</span>
+    </React.Fragment>,
+    ...probEntries.map(([key, value], index) => {
+      const isLast = index === probEntries.length - 1;
+      return (
+        <React.Fragment key={`prob-${key}`}>
+          {"    "}
+          <span className={styles.key}>&quot;{key}&quot;</span>
           <span className={styles.punctuation}>: </span>
-          <span className={styles.number}>{payload.status}</span>
-          <span className={styles.punctuation}>,</span>
-        </>
-      ),
-    },
-    {
-      num: 3,
-      content: (
-        <>
-          {'  '}
-          <span className={styles.key}>&quot;confidence&quot;</span>
-          <span className={styles.punctuation}>: </span>
-          <span className={styles.number}>{payload.confidence}</span>
-          <span className={styles.punctuation}>,</span>
-        </>
-      ),
-    },
-    {
-      num: 4,
-      content: (
-        <>
-          {'  '}
-          <span className={styles.key}>&quot;label&quot;</span>
-          <span className={styles.punctuation}>: </span>
-          <span className={styles.string}>&quot;{payload.label}&quot;</span>
-          <span className={styles.punctuation}>,</span>
-        </>
-      ),
-    },
-    {
-      num: 5,
-      content: (
-        <>
-          {'  '}
-          <span className={styles.key}>&quot;freshness&quot;</span>
-          <span className={styles.punctuation}>: </span>
-          <span className={styles.string}>&quot;{payload.freshness}&quot;</span>
-          <span className={styles.punctuation}>,</span>
-        </>
-      ),
-    },
-    {
-      num: 6,
-      content: (
-        <>
-          {'  '}
-          <span className={styles.key}>&quot;inference_time&quot;</span>
-          <span className={styles.punctuation}>: </span>
-          <span className={styles.number}>{payload.inference_time_ms}</span>
-        </>
-      ),
-    },
-    { num: 7, content: <span className={styles.punctuation}>{'}'}</span> },
+          <span className={styles.number}>{value}</span>
+          {!isLast && <span className={styles.punctuation}>,</span>}
+        </React.Fragment>
+      );
+    }),
+    <React.Fragment key="prob-close">
+      {"  "}
+      <span className={styles.punctuation}>{"}"}</span>
+    </React.Fragment>,
+    <span key="close" className={styles.punctuation}>
+      {"}"}
+    </span>,
   ];
 
   return (
@@ -92,15 +81,15 @@ export function JsonResponse({ payload }: JsonResponseProps) {
       </button>
 
       <div
-        className={`${styles.collapseWrapper} ${isOpen ? styles.expanded : ''}`}
+        className={`${styles.collapseWrapper} ${isOpen ? styles.expanded : ""}`}
       >
         <div className={styles.collapseInner}>
           <pre className={styles.editor}>
             <code>
-              {lines.map((line) => (
-                <div key={line.num} className={styles.line}>
-                  <span className={styles.lineNumber}>{line.num}</span>
-                  <span>{line.content}</span>
+              {lines.map((lineContent, idx) => (
+                <div key={idx} className={styles.line}>
+                  <span className={styles.lineNumber}>{idx + 1}</span>
+                  <span>{lineContent}</span>
                 </div>
               ))}
             </code>

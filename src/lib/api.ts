@@ -1,146 +1,173 @@
-import axios from 'axios';
-import { FreshnessStatus, FruitAnalysisData } from '@/types/scanner';
+import axios from "axios";
+import { FreshnessStatus, FruitAnalysisData } from "@/types/scanner";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 15000,
 });
 
+export type ModelClassKey =
+  | "freshapples"
+  | "freshbanana"
+  | "freshoranges"
+  | "rottenapples"
+  | "rottenbanana"
+  | "rottenoranges";
 
 export interface RawBackendPrediction {
-  label?: string;
-  fruit?: string;
-  class_name?: string;
-  freshness?: string;
-  status?: string;
-  confidence?: number;
-  inference_time_ms?: number;
-  inference_time?: number;
+  filename: string;
+  clase: ModelClassKey | string;
+  confianza: number;
+  probabilidades?: Record<string, number>;
 }
 
-function resolveFreshnessStatus(rawText: string): FreshnessStatus {
-  const normalized = rawText.toLowerCase();
+const CLASS_CATALOG: Record<
+  ModelClassKey,
+  {
+    label: string;
+    status: FreshnessStatus;
+    freshness: string;
+    shelfLife: string;
+    retail: string;
+    consumer: string;
+  }
+> = {
+  freshapples: {
+    label: "Manzana Roja",
+    status: "fresh",
+    freshness: "Fresca",
+    shelfLife: "5-7 días",
+    retail:
+      "Mantener en anaquel principal con monitoreo estándar de temperatura.",
+    consumer:
+      "Excelente punto de frescura y textura para consumo durante la semana.",
+  },
+  freshbanana: {
+    label: "Plátano Cavendish",
+    status: "fresh",
+    freshness: "Fresca",
+    shelfLife: "4-6 días",
+    retail: "Mantener en exhibición principal. Vida útil estimada: 4 a 6 días.",
+    consumer:
+      "Punto óptimo de maduración para consumo directo o almacenamiento en hogar.",
+  },
+  freshoranges: {
+    label: "Naranja Valencia",
+    status: "fresh",
+    freshness: "Fresca",
+    shelfLife: "7-10 días",
+    retail:
+      "Apta para exhibición estándar en área de cítricos con rotación regular.",
+    consumer:
+      "Fruta fresca y jugosa, ideal para consumo durante los próximos 7 a 10 días.",
+  },
+  rottenapples: {
+    label: "Manzana Deteriorada",
+    status: "spoiled",
+    freshness: "Deteriorada",
+    shelfLife: "No apta",
+    retail:
+      "Retirar inmediatamente del lote para evitar liberación de etileno y merma cruzada.",
+    consumer:
+      "No recomendable para consumo. Presenta signos avanzados de descomposición.",
+  },
+  rottenbanana: {
+    label: "Plátano Deteriorado",
+    status: "spoiled",
+    freshness: "Deteriorada",
+    shelfLife: "No apta",
+    retail:
+      "Retirar de piso de venta de inmediato y registrar como merma orgánica.",
+    consumer:
+      "No apto para consumo fresco debido a oxidación y deterioro avanzado.",
+  },
+  rottenoranges: {
+    label: "Naranja con Merma",
+    status: "spoiled",
+    freshness: "Deteriorada",
+    shelfLife: "No apta",
+    retail:
+      "Retirar inmediatamente del lote para evitar contaminación fúngica cruzada.",
+    consumer:
+      "No recomendable para consumo. Presenta signos visibles de deterioro.",
+  },
+};
 
-  if (
-    normalized.includes('spoiled') ||
-    normalized.includes('rotten') ||
-    normalized.includes('deteriorad') ||
-    normalized.includes('merma') ||
-    normalized.includes('bad')
-  ) {
-    return 'spoiled';
+function mapClassMetadata(rawClass: string) {
+  const key = rawClass.toLowerCase().trim() as ModelClassKey;
+
+  if (key in CLASS_CATALOG) {
+    return CLASS_CATALOG[key];
   }
 
-  if (
-    normalized.includes('ripe') ||
-    normalized.includes('warning') ||
-    normalized.includes('madur') ||
-    normalized.includes('expirar') ||
-    normalized.includes('rotacion')
-  ) {
-    return 'warning';
-  }
-
-  return 'fresh';
-}
-
-function getRecommendationsByStatus(status: FreshnessStatus) {
-  switch (status) {
-    case 'spoiled':
-      return {
-        freshnessLabel: 'Deteriorada',
-        shelfLife: 'No apta',
-        retail:
-          'Retirar inmediatamente del lote para evitar contaminación cruzada.',
-        consumer:
-          'No recomendable para consumo. Presenta signos visibles de deterioro.',
-      };
-    case 'warning':
-      return {
-        freshnessLabel: 'Próxima a expirar',
-        shelfLife: '2-3 días',
-        retail:
-          'Priorizar en frente de anaquel o aplicar descuento de rotación rápida.',
-        consumer:
-          'Ideal para consumo inmediato en los próximos 2 a 3 días.',
-      };
-    case 'fresh':
-    default:
-      return {
-        freshnessLabel: 'Fresca',
-        shelfLife: '5-7 días',
-        retail:
-          'Mantener en anaquel principal con monitoreo estándar de temperatura.',
-        consumer:
-          'Excelente punto de frescura para consumo durante toda la semana.',
-      };
-  }
+  // Respaldo genérico por si en el futuro agregas nuevas clases al modelo
+  const isSpoiled = key.startsWith("rotten");
+  return {
+    label: rawClass,
+    status: (isSpoiled ? "spoiled" : "fresh") as FreshnessStatus,
+    freshness: isSpoiled ? "Deteriorada" : "Fresca",
+    shelfLife: isSpoiled ? "No apta" : "5-7 días",
+    retail: isSpoiled
+      ? "Retirar inmediatamente del lote para evitar contaminación cruzada."
+      : "Mantener en anaquel principal con monitoreo estándar.",
+    consumer: isSpoiled
+      ? "No recomendable para consumo."
+      : "Apta para compra y consumo fresco.",
+  };
 }
 
 export async function predictFruitImage(
   imageSource: File | string,
-  fileName = 'sample.webp'
+  fileName = "sample.webp",
 ): Promise<FruitAnalysisData> {
   const formData = new FormData();
 
   if (imageSource instanceof File) {
-    formData.append('file', imageSource);
+    formData.append("file", imageSource);
   } else {
-    // Si viene de las Muestras Rápidas (ruta local /images/fruits/...), la convertimos a Blob/File
     const response = await fetch(imageSource);
     const blob = await response.blob();
     const fileFromSample = new File([blob], fileName, {
-      type: blob.type || 'image/webp',
+      type: blob.type || "image/webp",
     });
-    formData.append('file', fileFromSample);
+    formData.append("file", fileFromSample);
   }
 
   const startTime = performance.now();
 
-  
   const { data } = await apiClient.post<RawBackendPrediction>(
-    '/predict',
+    "/predict",
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
-  const elapsedMs = Math.round(performance.now() - startTime);
+  const inferenceTime = Math.max(1, Math.round(performance.now() - startTime));
+  const meta = mapClassMetadata(data.clase);
 
-  const detectedLabel =
-    data.label || data.fruit || data.class_name || 'Producto Analizado';
-  const rawCondition = data.freshness || data.status || 'Fresca';
-  const status = resolveFreshnessStatus(rawCondition);
-  const meta = getRecommendationsByStatus(status);
+  const normalizedConfidence =
+    data.confianza > 1 ? data.confianza / 100 : data.confianza;
 
-  
-  const rawConf = typeof data.confidence === 'number' ? data.confidence : 0.9;
-  const normalizedConfidence = rawConf > 1 ? rawConf / 100 : rawConf;
-  const inferenceTime =
-    data.inference_time_ms ?? data.inference_time ?? elapsedMs;
-
-  return {
+return {
     id: `api-${Date.now()}`,
-    name: fileName,
+    name: data.filename || fileName,
     image: typeof imageSource === 'string' ? imageSource : '',
-    fruitType: detectedLabel,
-    status,
+    fruitType: meta.label,
+    status: meta.status,
     confidence: Number(normalizedConfidence.toFixed(4)),
-    freshness: meta.freshnessLabel,
+    freshness: meta.freshness,
     shelfLife: meta.shelfLife,
     inferenceTime,
     retailRecommendation: meta.retail,
     consumerRecommendation: meta.consumer,
     jsonResponse: {
-      status: 200,
-      confidence: Number(normalizedConfidence.toFixed(4)),
-      label: detectedLabel,
-      freshness: meta.freshnessLabel,
-      shelf_life_days: meta.shelfLife,
-      inference_time_ms: inferenceTime,
+      filename: data.filename || fileName,
+      clase: data.clase,
+      confianza: data.confianza,
+      probabilidades: data.probabilidades ?? {},
     },
   };
 }

@@ -4,6 +4,7 @@ import styles from "./Footer.module.css";
 
 interface FooterProps {
   githubRepoUrl?: string;
+  githubRepoUrl2?: string;
 }
 
 const TECH_STACK = [
@@ -11,14 +12,6 @@ const TECH_STACK = [
   { name: "TensorFlow", icon: <Cpu size={15} className={styles.stackIcon} /> },
   { name: "React", icon: <Atom size={15} className={styles.stackIcon} /> },
   { name: "FastAPI", icon: <Zap size={15} className={styles.stackIcon} /> },
-];
-
-const TEAM_MEMBERS = [
-  { name: "Axel Espinosa Paz", isLead: false },
-  { name: "Lino Eduardo Avilés Hernández", isLead: false },
-  { name: "Eduardo Yael Gonzalez Lopez", isLead: false },
-  { name: "Ramona Mediana Hernandez", isLead: false },
-  { name: "Lois Angel Cipres Flores", isLead: false },
 ];
 
 function GithubMark({ size = 19 }: { size?: number }) {
@@ -35,7 +28,10 @@ function GithubMark({ size = 19 }: { size?: number }) {
   );
 }
 
-export function Footer({ githubRepoUrl = "#arquitectura-ia" }: FooterProps) {
+export function Footer({
+  githubRepoUrl = "#arquitectura-ia",
+  githubRepoUrl2 = "#arquitectura-ia2",
+}: FooterProps) {
   return (
     <footer id="arquitectura-ia" className={styles.footer}>
       <div className={styles.container}>
@@ -72,7 +68,7 @@ export function Footer({ githubRepoUrl = "#arquitectura-ia" }: FooterProps) {
 
           {/* Columna 3: GitHub */}
           <div>
-            <h3 className={styles.colTitle}>Código Fuente:</h3>
+            <h3 className={styles.colTitle}>Código Fuente:Front</h3>
             <a
               href={githubRepoUrl}
               target="_blank"
@@ -91,19 +87,24 @@ export function Footer({ githubRepoUrl = "#arquitectura-ia" }: FooterProps) {
             </a>
           </div>
 
-          {/* Columna 4: Equipo */}
           <div>
-            <h3 className={styles.colTitle}>Equipo:</h3>
-            <ul className={styles.teamList}>
-              {TEAM_MEMBERS.map((member) => (
-                <li
-                  key={member.name}
-                  className={member.isLead ? styles.teamLead : styles.teamSub}
-                >
-                  {member.name}
-                </li>
-              ))}
-            </ul>
+            <h3 className={styles.colTitle}>Código Fuente:Api</h3>
+            <a
+              href={githubRepoUrl2}
+              target="_blank"
+              className={styles.repoCard}
+              aria-label="Repositorio público del proyecto en GitHub"
+            >
+              <span className={styles.githubIconBox}>
+                <GithubMark size={19} />
+              </span>
+              <div>
+                <div className={styles.repoTitle}>Repositorio en GitHub</div>
+                <div className={styles.repoSubtitle}>
+                  Repositorio público del proyecto
+                </div>
+              </div>
+            </a>
           </div>
         </div>
 

@@ -1,12 +1,10 @@
 export type FreshnessStatus = 'fresh' | 'warning' | 'spoiled';
 
 export interface ApiJsonPayload {
-  status: number;
-  confidence: number;
-  label: string;
-  freshness: string;
-  shelf_life_days: string;
-  inference_time_ms: number;
+  filename: string;
+  clase: string;
+  confianza: number;
+  probabilidades: Record<string, number>;
 }
 
 export interface FruitAnalysisData {
