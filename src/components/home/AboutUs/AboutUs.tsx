@@ -8,34 +8,37 @@ import styles from './AboutUs.module.css';
 const TEAM_MEMBERS = [
   {
     id: 1,
-    name: 'Eduardo Yair Gonzalez Lopez',
-    github: 'Imyairgonzalez',
+    name: 'Lino Eduardo Avilés Hernández',
+    github: 'IO420',
   },
   {
     id: 2,
+    name: 'Carlos Axel Espinosa Ramírez',
+    github: 'AxelEspinoza94',
+  },
+ 
+  {
+    id: 3,
     name: 'Imanol Alexy Mendez Amel',
     github: 'ImanolAL',
   },
-  {
-    id: 3,
-    name: 'Carlos Axel Espinosa Ramírez',
-    github: 'IO420',
-  },
+  
   {
     id: 4,
     name: 'Luis Angel Cipres Flores',
     github: '421110016-a11y',
   },
+  
   {
     id: 5,
-    name: 'Lino Eduardo Avilés Hernández',
-    github: '',
-  },
-  {
-    id: 6,
     name: 'Ramón Mediana Hernandez',
-    github: '',
+    github: 'ramoncito<3',
   },
+   {
+    id: 6,
+    name: 'Eduardo Yair Gonzalez Lopez',
+    github: 'Imyairgonzalez',
+  }
 ];
 
 
