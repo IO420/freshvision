@@ -5,6 +5,7 @@ import { Hero } from '@/components/home/Hero/Hero';
 import { InferenceStudio } from '@/components/scanner/InferenceStudio/InferenceStudio';
 import { BusinessModel } from '@/components/home/BusinessModel/BusinessModel';
 import { AboutUs } from '@/components/home/AboutUs/AboutUs';
+import MisionVision from '@/components/home/MisionVision';
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
         <Hero />
         <InferenceStudio />
         <BusinessModel />
+        <MisionVision />
         <AboutUs />
       </main>
 
