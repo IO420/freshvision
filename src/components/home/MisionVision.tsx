@@ -1,42 +1,129 @@
 import React from 'react';
 
-/**
- * Sección de Misión y Visión para freshVision.
- * Colócala después de la sección "Modelo de Negocio Híbrido" y antes del Footer.
- * En el Header, puedes agregar un enlace: <a href="#identidad">Nosotros</a>
- */
-export default function MisionVision() {
+export function MisionVision() {
   return (
     <section
       id="identidad"
-      className="py-20 px-6 max-w-6xl mx-auto"
+      className="mv-section"
       aria-labelledby="identidad-titulo"
     >
-      {/* Encabezado de sección */}
-      <div className="text-center max-w-2xl mx-auto mb-12">
-        <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
-          Identidad y Propósito
-        </span>
-        <h2
-          id="identidad-titulo"
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
-        >
+      <style>{`
+        .mv-section {
+          padding: 5rem 1.5rem;
+          max-width: 72rem;
+          margin: 0 auto;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .mv-header {
+          text-align: center;
+          max-width: 42rem;
+          margin: 0 auto 3rem;
+        }
+        .mv-badge {
+          display: inline-block;
+          padding: 0.35rem 0.9rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          border-radius: 9999px;
+          background-color: rgba(16, 185, 129, 0.12);
+          color: #059669;
+          border: 1px solid rgba(16, 185, 129, 0.25);
+          margin-bottom: 1rem;
+        }
+        .mv-title {
+          font-size: clamp(1.75rem, 3vw, 2.25rem);
+          font-weight: 700;
+          line-height: 1.2;
+          color: #0f172a;
+          margin: 0 0 0.75rem;
+        }
+        .mv-subtitle {
+          font-size: 1.05rem;
+          line-height: 1.6;
+          color: #475569;
+          margin: 0;
+        }
+        .mv-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+          .mv-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        .mv-card {
+          background-color: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 1rem;
+          padding: 2rem;
+          box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+          transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .mv-card:hover {
+          border-color: rgba(16, 185, 129, 0.5);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        }
+        .mv-card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          margin-bottom: 1rem;
+        }
+        .mv-icon-box {
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 0.75rem;
+          background-color: rgba(16, 185, 129, 0.12);
+          border: 1px solid rgba(16, 185, 129, 0.25);
+          color: #059669;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .mv-icon-svg {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+        .mv-card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #0f172a;
+          margin: 0;
+        }
+        .mv-card-text {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: #334155;
+          margin: 0;
+        }
+      `}</style>
+
+      <div className="mv-header">
+        <span className="mv-badge">Identidad y Propósito</span>
+        <h2 id="identidad-titulo" className="mv-title">
           Tecnología que mantiene lo natural
         </h2>
-        <p className="text-slate-400 text-base md:text-lg">
+        <p className="mv-subtitle">
           Conectamos la visión por computadora con el consumo responsable y la
           eficiencia en anaquel.
         </p>
       </div>
 
-      {/* Tarjetas paralelas: Misión y Visión */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Tarjeta Misión */}
-        <article className="rounded-2xl p-8 bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-colors">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+      <div className="mv-grid">
+        <article className="mv-card">
+          <div className="mv-card-header">
+            <div className="mv-icon-box">
               <svg
-                className="w-5 h-5"
+                className="mv-icon-svg"
+                width="20"
+                height="20"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -50,9 +137,9 @@ export default function MisionVision() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold">Misión</h3>
+            <h3 className="mv-card-title">Misión</h3>
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="mv-card-text">
             Democratizar el control de calidad de alimentos perecederos mediante
             visión por computadora, brindando a supermercados y consumidores
             diagnósticos instantáneos de frescura que optimizan la rotación en
@@ -60,12 +147,13 @@ export default function MisionVision() {
           </p>
         </article>
 
-        {/* Tarjeta Visión */}
-        <article className="rounded-2xl p-8 bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-colors">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+        <article className="mv-card">
+          <div className="mv-card-header">
+            <div className="mv-icon-box">
               <svg
-                className="w-5 h-5"
+                className="mv-icon-svg"
+                width="20"
+                height="20"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -84,9 +172,9 @@ export default function MisionVision() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold">Visión</h3>
+            <h3 className="mv-card-title">Visión</h3>
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="mv-card-text">
             Consolidarnos como el estándar tecnológico de auditoría óptica en el
             sector retail y en el consumo inteligente, impulsando cadenas de
             suministro más sostenibles donde la inteligencia artificial elimine
@@ -97,3 +185,5 @@ export default function MisionVision() {
     </section>
   );
 }
+
+export default MisionVision;
