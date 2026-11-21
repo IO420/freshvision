@@ -1,52 +1,48 @@
+"use client";
 
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-import styles from './AboutUs.module.css';
-
+import { useEffect, useRef, useState } from "react";
+import styles from "./AboutUs.module.css";
 
 const TEAM_MEMBERS = [
   {
     id: 1,
-    name: 'Lino Eduardo Avilés Hernández',
-    github: 'IO420',
+    name: "Carlos Axel Espinosa Ramírez",
+    github: "AxelEspinoza94",
   },
   {
     id: 2,
-    name: 'Carlos Axel Espinosa Ramírez',
-    github: 'AxelEspinoza94',
+    name: "Lino Eduardo Avilés Hernández",
+    github: "IO420",
   },
- 
+
   {
     id: 3,
-    name: 'Imanol Alexy Mendez Amel',
-    github: 'ImanolAL',
+    name: "Imanol Alexy Mendez Amel",
+    github: "ImanolAL",
   },
-  
+
   {
     id: 4,
-    name: 'Luis Angel Cipres Flores',
-    github: '421110016-a11y',
+    name: "Luis Angel Cipres Flores",
+    github: "421110016-a11y",
   },
-  
+
   {
     id: 5,
-    name: 'Ramón Mediana Hernandez',
-    github: 'ramoncito<3',
+    name: "Ramón Mediana Hernandez",
+    github: "ramoncito<3",
   },
-   {
+  {
     id: 6,
-    name: 'Eduardo Yair Gonzalez Lopez',
-    github: 'Imyairgonzalez',
-  }
+    name: "Eduardo Yair Gonzalez Lopez",
+    github: "Imyairgonzalez",
+  },
 ];
-
 
 type TeamMember = (typeof TEAM_MEMBERS)[number];
 
 export function AboutUs() {
-  const [selectedMember, setSelectedMember] =
-    useState<TeamMember | null>(null);
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -73,10 +69,9 @@ export function AboutUs() {
         <h2>About Us</h2>
 
         <p>
-          Somos el equipo detrás de FreshVision, un proyecto
-          que utiliza inteligencia artificial y visión por
-          computadora para analizar la frescura de frutas
-          y contribuir a reducir el desperdicio de alimentos.
+          Somos el equipo detrás de FreshVision, un proyecto que utiliza
+          inteligencia artificial y visión por computadora para analizar la
+          frescura de frutas y contribuir a reducir el desperdicio de alimentos.
         </p>
 
         <h3>Nuestro Equipo</h3>
@@ -118,24 +113,20 @@ export function AboutUs() {
               ×
             </button>
 
-            <span className={styles.modalLabel}>
-              PERFIL DEL INTEGRANTE
-            </span>
+            <span className={styles.modalLabel}>PERFIL DEL INTEGRANTE</span>
 
             <div className={styles.profileHeader}>
               <div className={styles.avatar}>
                 {selectedMember.name
-                  .split(' ')
+                  .split(" ")
                   .slice(0, 2)
                   .map((part) => part.charAt(0))
-                  .join('')
+                  .join("")
                   .toUpperCase()}
               </div>
 
               <div>
-                <h2 id="member-profile-title">
-                  {selectedMember.name}
-                </h2>
+                <h2 id="member-profile-title">{selectedMember.name}</h2>
                 <span className={styles.profileSubtitle}>
                   Integrante del equipo FreshVision
                 </span>
@@ -145,20 +136,18 @@ export function AboutUs() {
             <div className={styles.profileSection}>
               <h3>Acerca de mí</h3>
               <p>
-                Soy parte del equipo que desarrolla
-                FreshVision, un proyecto enfocado en aplicar
-                 herramientas  tecnológicas para resolver 
-                 problemas reales.
+                Soy parte del equipo que desarrolla FreshVision, un proyecto
+                enfocado en aplicar herramientas tecnológicas para resolver
+                problemas reales.
               </p>
             </div>
 
             <div className={styles.profileSection}>
               <h3>FreshVision</h3>
               <p>
-                Participo en el desarrollo de una solución
-                basada en inteligencia artificial y visión
-                por computadora para contribuir a reducir
-                el desperdicio de alimentos.
+                Participo en el desarrollo de una solución basada en
+                inteligencia artificial y visión por computadora para contribuir
+                a reducir el desperdicio de alimentos.
               </p>
             </div>
 
@@ -175,4 +164,3 @@ export function AboutUs() {
     </section>
   );
 }
-

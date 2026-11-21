@@ -18,7 +18,6 @@ export function RecommendationCard({
           <span className={styles.iconCircle}>
             <Store size={16} />
           </span>
-          <h4 className={styles.title}>Acción Retail (B2B)</h4>
         </div>
         <p className={styles.description}>{retailText}</p>
       </div>
@@ -28,7 +27,6 @@ export function RecommendationCard({
           <span className={styles.iconCircle}>
             <User size={16} />
           </span>
-          <h4 className={styles.title}>Acción Consumidor (B2C)</h4>
         </div>
         <p className={styles.description}>{consumerText}</p>
       </div>
