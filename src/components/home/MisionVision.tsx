@@ -1,6 +1,6 @@
- import React from 'react';
+import React from 'react';
 
-export function MisionVision() {
+export default function MisionVision() {
   return (
     <section id="identidad" className="mv-section">
       <style>{`
@@ -11,7 +11,7 @@ export function MisionVision() {
         }
         .mv-header {
           text-align: center;
-          max-width: 42rem;
+          max-width: 46rem;
           margin: 0 auto 3rem;
         }
         .mv-badge {
@@ -36,7 +36,7 @@ export function MisionVision() {
         }
         .mv-subtitle {
           font-size: 1.05rem;
-          line-height: 1.6;
+          line-height: 1.65;
           color: #475569;
           margin: 0;
         }
@@ -83,7 +83,7 @@ export function MisionVision() {
         }
         .mv-card-text {
           font-size: 1rem;
-          line-height: 1.7;
+          line-height: 1.75;
           color: #334155;
           margin: 0;
         }
@@ -91,9 +91,9 @@ export function MisionVision() {
 
       <div className="mv-header">
         <span className="mv-badge">Identidad y Propósito</span>
-        <h2 className="mv-title">Tecnología que mantiene lo natural</h2>
+        <h2 className="mv-title">Tecnología sencilla para saber qué tan fresca está tu fruta</h2>
         <p className="mv-subtitle">
-          Conectamos la visión por computadora con el consumo responsable y la eficiencia en anaquel.
+          Combinamos inteligencia artificial con la cámara de tu dispositivo para que cualquier persona, sin conocimientos técnicos, pueda revisar sus frutas en segundos y tomar mejores decisiones al comprar o cocinar.
         </p>
       </div>
 
@@ -110,7 +110,7 @@ export function MisionVision() {
             <h3 className="mv-card-title">Misión</h3>
           </div>
           <p className="mv-card-text">
-            Democratizar el control de calidad de alimentos perecederos mediante visión por computadora, brindando a supermercados y consumidores diagnósticos instantáneos de frescura que optimizan la rotación en anaquel y reducen la merma hasta en un 35 %.
+            Poner al alcance de cualquier persona una herramienta rápida, gratuita y fácil de usar que, con solo apuntar la cámara, detecte de inmediato si una fruta está fresca, lista para comerse o echada a perder. Queremos ayudar a las familias a elegir alimentos en buen estado al hacer sus compras, cuidar su salud y evitar tirar comida que todavía sirve o consumir productos dañados por error.
           </p>
         </article>
 
@@ -125,12 +125,10 @@ export function MisionVision() {
             <h3 className="mv-card-title">Visión</h3>
           </div>
           <p className="mv-card-text">
-            Consolidarnos como el estándar tecnológico de auditoría óptica en el sector retail y en el consumo inteligente, impulsando cadenas de suministro más sostenibles donde la inteligencia artificial elimine el desperdicio innecesario de alimentos.
+            Convertirnos en la aplicación de referencia en cada hogar, mercado y cocina para revisar la calidad de los alimentos de forma visual y cotidiana. Aspiramos a que revisar la frescura de una fruta con el celular sea un hábito tan natural como mirar su color, reduciendo el desperdicio de comida en casa y haciendo que la inteligencia artificial sea útil para la vida diaria de todos.
           </p>
         </article>
       </div>
     </section>
   );
 }
-
-export default MisionVision;
