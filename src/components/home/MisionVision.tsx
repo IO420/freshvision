@@ -1,96 +1,131 @@
 import React from 'react';
 
-/**
- * Sección de Misión y Visión para freshVision.
- * Colócala después de la sección "Modelo de Negocio Híbrido" y antes del Footer.
- * En el Header, puedes agregar un enlace: <a href="#identidad">Nosotros</a>
- */
 export default function MisionVision() {
   return (
-    <section
-      id="identidad"
-      className="py-20 px-6 max-w-6xl mx-auto"
-      aria-labelledby="identidad-titulo"
-    >
-      {/* Encabezado de sección */}
-      <div className="text-center max-w-2xl mx-auto mb-12">
-        <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
-          Identidad y Propósito
-        </span>
-        <h2
-          id="identidad-titulo"
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
-        >
-          Tecnología que mantiene lo natural
-        </h2>
-        <p className="text-slate-400 text-base md:text-lg">
-          Conectamos la visión por computadora con el consumo responsable y la
-          eficiencia en anaquel.
+    <section id="identidad" className="mv-section">
+      <style>{`
+        .mv-section {
+          padding: 5rem 1.5rem;
+          max-width: 72rem;
+          margin: 0 auto;
+        }
+        .mv-header {
+          text-align: center;
+          max-width: 42rem;
+          margin: 0 auto 3rem;
+        }
+        .mv-badge {
+          display: inline-block;
+          padding: 0.35rem 0.9rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          border-radius: 9999px;
+          background-color: rgba(16, 185, 129, 0.12);
+          color: #059669;
+          border: 1px solid rgba(16, 185, 129, 0.25);
+          margin-bottom: 1rem;
+        }
+        .mv-title {
+          font-size: clamp(1.75rem, 3vw, 2.25rem);
+          font-weight: 700;
+          line-height: 1.2;
+          color: #0f172a;
+          margin: 0 0 0.75rem;
+        }
+        .mv-subtitle {
+          font-size: 1.05rem;
+          line-height: 1.6;
+          color: #475569;
+          margin: 0;
+        }
+        .mv-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+          .mv-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        .mv-card {
+          background-color: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 1rem;
+          padding: 2rem;
+          box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+        .mv-card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          margin-bottom: 1rem;
+        }
+        .mv-icon-box {
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 0.75rem;
+          background-color: rgba(16, 185, 129, 0.12);
+          border: 1px solid rgba(16, 185, 129, 0.25);
+          color: #059669;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .mv-card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #0f172a;
+          margin: 0;
+        }
+        .mv-card-text {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: #334155;
+          margin: 0;
+        }
+      `}</style>
+
+      <div className="mv-header">
+        <span className="mv-badge">Identidad y Propósito</span>
+        <h2 className="mv-title">Tecnología que mantiene lo natural</h2>
+        <p className="mv-subtitle">
+          Conectamos la visión por computadora con el consumo responsable y la eficiencia en anaquel.
         </p>
       </div>
 
-      {/* Tarjetas paralelas: Misión y Visión */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Tarjeta Misión */}
-        <article className="rounded-2xl p-8 bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-colors">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"
-                />
+      <div className="mv-grid">
+        <article className="mv-card">
+          <div className="mv-card-header">
+            <div className="mv-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold">Misión</h3>
+            <h3 className="mv-card-title">Misión</h3>
           </div>
-          <p className="text-slate-300 leading-relaxed">
-            Democratizar el control de calidad de alimentos perecederos mediante
-            visión por computadora, brindando a supermercados y consumidores
-            diagnósticos instantáneos de frescura que optimizan la rotación en
-            anaquel y reducen la merma hasta en un 35&nbsp;%.
+          <p className="mv-card-text">
+            Democratizar el control de calidad de alimentos perecederos mediante visión por computadora, brindando a supermercados y consumidores diagnósticos instantáneos de frescura que optimizan la rotación en anaquel y reducen la merma hasta en un 35 %.
           </p>
         </article>
 
-        {/* Tarjeta Visión */}
-        <article className="rounded-2xl p-8 bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-colors">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                />
+        <article className="mv-card">
+          <div className="mv-card-header">
+            <div className="mv-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold">Visión</h3>
+            <h3 className="mv-card-title">Visión</h3>
           </div>
-          <p className="text-slate-300 leading-relaxed">
-            Consolidarnos como el estándar tecnológico de auditoría óptica en el
-            sector retail y en el consumo inteligente, impulsando cadenas de
-            suministro más sostenibles donde la inteligencia artificial elimine
-            el desperdicio innecesario de alimentos.
+          <p className="mv-card-text">
+            Consolidarnos como el estándar tecnológico de auditoría óptica en el sector retail y en el consumo inteligente, impulsando cadenas de suministro más sostenibles donde la inteligencia artificial elimine el desperdicio innecesario de alimentos.
           </p>
         </article>
       </div>
