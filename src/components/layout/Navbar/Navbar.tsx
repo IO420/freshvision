@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: 'Demo en Vivo', href: '#demo-en-vivo' },
   { label: 'Modelo de Negocio', href: '#modelo-de-negocio' },
   { label: 'Arquitectura IA', href: '#arquitectura-ia' },
+  { label: 'Misión y Visión', href: '#identidad' },
   { label: 'About Us', href: '#about-us' },
 ];
 
